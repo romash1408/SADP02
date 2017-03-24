@@ -5,19 +5,19 @@
 #include <stdio.h>
 
 /*BSTree*/
-typedef struct{
+struct BSTree{
 	char *key;
 	int value;
 	struct BSTree *childs[2];
 	size_t height;
-} BSTree;
+};
 
-BSTree *bstree_create(char *_key, int _value);
-void bstree_free(BSTree *_tree);
-void bstree_print(BSTree *_tree);
-BSTree *bstree_add(BSTree *_tree, char *_key, int _value);
-BSTree *bstree_lookup(BSTree *_tree, char *_key);
-BSTree *bstree_min(BSTree *_tree);
-BSTree *bstree_max(BSTree *_tree);
+struct BSTree *bstree_create(char *_key, int _value);
+void bstree_free(struct BSTree *_tree);
+void bstree_print(struct BSTree *_tree);
+struct BSTree *bstree_add(struct BSTree *_tree, char *_key, int _value);
+struct BSTree *bstree_lookup(struct BSTree *_tree, char *_key);
+struct BSTree *bstree_min(struct BSTree *_tree);
+struct BSTree *bstree_max(struct BSTree *_tree);
 
 #endif

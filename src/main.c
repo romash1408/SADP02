@@ -1,9 +1,17 @@
 #include <stdio.h>
 #include "bstree.h"
 
+const int N = 2;
+
 int main()
 {
-	BSTree *tmp = bstree_create("key", 123);
+	struct BSTree *tmp = bstree_create("0", 0);
+	for(int i = 0; i < N; ++i)
+	{
+		char key[3];
+		sprintf(key, "%d", i);
+		tmp = bstree_add(tmp, key, i);
+	}
 	if(!tmp)
 	{
 		fprintf(stderr, "Coudn't create BSTree.\n");
