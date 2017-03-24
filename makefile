@@ -1,5 +1,5 @@
 main: main.o bstree.o
-	gcc -o test build/bstree.o build/main.o
+	gcc -o test.exe build/bstree.o build/main.o
 	
 debug: debug/main.o debug/bstree.o
 	gcc -o test debug/main.o debug/bstree.o
