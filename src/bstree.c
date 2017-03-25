@@ -89,10 +89,10 @@ void bstree_print(struct BSTree *_tree)
 {
 	if(!_tree)
 	{
-		printf("0");
+		printf("<0>");
 		return;
 	}
-	size_t max_length = 1 << (_tree->height - 1);
+	size_t max_length = 1 << _tree->height;
 	struct BSTree **old_trees = malloc(sizeof(*old_trees) * max_length);
 	if(!old_trees) return;
 	struct BSTree **next_trees = malloc(sizeof(*next_trees) * max_length);
@@ -114,18 +114,25 @@ void bstree_print(struct BSTree *_tree)
 		
 		for(size_t i = 0; i < old; ++i)
 		{
+			char out[8];
 			if(old_trees[i] == 0)
 			{
-				printf("%7s", "<0>");
+				sprintf(out, "<0>");
 				next_trees[next++] = 0;
 				next_trees[next++] = 0;
 			}
 			else
 			{
-				printf("%3s(%2d)", old_trees[i]->key, old_trees[i]->value);
+				sprintf(out, "%s(%d)", old_trees[i]->key, old_trees[i]->value);
 				if((next_trees[next++] = old_trees[i]->childs[0])) ++count;
 				if((next_trees[next++] = old_trees[i]->childs[1])) ++count;
 			}
+			if(out[7] != 0)
+			{
+				out[6] = '~';
+				out[7] = 0;
+			}
+			printf("%7s ", out);
 		}
 		printf("\n");
 	}
