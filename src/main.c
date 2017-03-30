@@ -1,20 +1,21 @@
 #include <stdio.h>
 #include "bstree.h"
 
-const int N = 28;
+const int N = 16;
 
 int main()
 {
-	struct BSTree *tmp = bstree_create("a", 0);
+	int i = 0;
+	char s[10];
+	scanf("%s", s);
+	struct BSTree *tmp = bstree_create(s, i);
 	bstree_print(tmp);
 	
-	char key[2];
-	key[1] = 0;
-	for(int i = 1; i <= N; ++i)
+	for(i = 1; i <= N; ++i)
 	{
-		key[0] = 'a' + i;
-		tmp = bstree_add(tmp, key, i);
-		printf("Added %s(%d)!\n", key, i);
+		scanf("%s", s);
+		tmp = bstree_add(tmp, s, i);
+		bstree_print(tmp);
 	}
 	if(!tmp)
 	{

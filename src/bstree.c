@@ -142,15 +142,26 @@ void bstree_print(struct BSTree *_tree)
 
 struct BSTree *bstree_lookup(struct BSTree *_tree, char *_key)
 {
+	signed char to;
+	while(_tree && (to = strcmp(_tree->key, _key)) != 0)
+	{
+		_tree = _tree->childs[to < 0];
+	}
 	return 0;
 }
 
 struct BSTree *bstree_min(struct BSTree *_tree)
 {
+	if(!_tree) return 0;
+	while(_tree->childs[0]) _tree = _tree->childs[0];
+	return _tree;
 	return 0;
 }
 
 struct BSTree *bstree_max(struct BSTree *_tree)
 {
+	if(!_tree) return 0;
+	while(_tree->childs[1]) _tree = _tree->childs[1];
+	return _tree;
 	return 0;
 }
