@@ -1,8 +1,29 @@
 #include <stdio.h>
 #include "bstree.h"
+#include "hashtab.h"
 
 int main()
 {
+	char s[10];
+	HashTab tmp = 0;
+	hashtab_init(tmp);
+	if(!tmp)
+	{
+		fprintf(stderr, "Coudn't create ListNode.\n");
+		return 1;
+	}
+	
+	for(int i = 0; i <= N; ++i)
+	{
+		scanf("%s", s);
+		hashtab_add(tmp, s, i);
+		hashtab_print(tmp);
+	}
+	
+	hashtab_free(tmp);
+	return 0;
+	
+	/* BSTree
 	int i = 0;
 	char s[256], c;
 	struct BSTree *tmp = 0, *fnd;
@@ -28,8 +49,9 @@ int main()
 				printf("Didn't found\n");
 		}
 		bstree_print(tmp);
-	}
+	}=
 	bstree_print(tmp);
 	bstree_free(tmp);
 	return 0;
+	*/
 }
