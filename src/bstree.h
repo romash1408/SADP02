@@ -19,5 +19,6 @@ struct BSTree *bstree_add(struct BSTree *_tree, char *_key, int _value);
 struct BSTree *bstree_lookup(struct BSTree *_tree, char *_key);
 struct BSTree *bstree_min(struct BSTree *_tree);
 struct BSTree *bstree_max(struct BSTree *_tree);
+struct BSTree *bstree_delete(struct BSTree *_tree, char *_key);
 
 #endif

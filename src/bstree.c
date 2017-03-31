@@ -123,7 +123,7 @@ void bstree_print(struct BSTree *_tree)
 			}
 			else
 			{
-				sprintf(out, "%s(%d)", old_trees[i]->key, old_trees[i]->value);
+				sprintf(out, "%s(%zu)", old_trees[i]->key, old_trees[i]->height);
 				if((next_trees[next++] = old_trees[i]->childs[0])) ++count;
 				if((next_trees[next++] = old_trees[i]->childs[1])) ++count;
 			}
@@ -164,4 +164,46 @@ struct BSTree *bstree_max(struct BSTree *_tree)
 	while(_tree->childs[1]) _tree = _tree->childs[1];
 	return _tree;
 	return 0;
+}
+
+struct BSTree *bstree_delete(struct BSTree *_tree, char *_key)
+{
+	if(!_tree) return 0;
+	signed char to = strcmp(_tree->key, _key);
+	if(to != 0)
+	{
+		to = (to < 0);
+		_tree->childs[to] = bstree_delete(_tree->childs[to], _key);
+		return bstree_balance(_tree);
+	}
+	to = (bstree_height(_tree->childs[0]) < bstree_height(_tree->childs[1]));
+	if(!_tree->childs[to])
+	{
+		bstree_free(_tree);
+		return 0;
+	}
+	struct BSTree *ret = _tree->childs[to], *up = 0, *down;
+	while((down = ret->childs[!to]))
+	{
+		ret->childs[!to] = up;
+		up = ret;
+		ret = down;
+	}
+	down = ret->childs[to];
+	ret->childs[!to] = _tree->childs[!to];
+	_tree->childs[0] = 0;
+	_tree->childs[1] = 0;
+	bstree_free(_tree);
+	
+	if(!(_tree = up)) return ret;
+	while((up = _tree->childs[!to]))
+	{
+		_tree->childs[!to] = down;
+		down = bstree_balance(_tree);
+		_tree = up;
+	}
+	_tree->childs[!to] = down;
+	ret->childs[to] = bstree_balance(_tree);
+	bstree_calc_height(ret);
+	return ret;
 }
