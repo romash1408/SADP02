@@ -78,7 +78,7 @@ struct BSTree *bstree_add(struct BSTree *_tree, char *_key, int _value)
 	{
 		return bstree_create(_key, _value);
 	}
-	signed char to = strcmp(_tree->key, _key);
+	int to = strcmp(_tree->key, _key);
 	if(to == 0) return _tree;
 	to = (to < 0);
 	_tree->childs[to] = bstree_add(_tree->childs[to], _key, _value);
@@ -142,7 +142,7 @@ void bstree_print(struct BSTree *_tree)
 
 struct BSTree *bstree_lookup(struct BSTree *_tree, char *_key)
 {
-	signed char to;
+	int to;
 	while(_tree && (to = strcmp(_tree->key, _key)) != 0)
 	{
 		_tree = _tree->childs[to < 0];
@@ -169,7 +169,7 @@ struct BSTree *bstree_max(struct BSTree *_tree)
 struct BSTree *bstree_delete(struct BSTree *_tree, char *_key)
 {
 	if(!_tree) return 0;
-	signed char to = strcmp(_tree->key, _key);
+	int to = strcmp(_tree->key, _key);
 	if(to != 0)
 	{
 		to = (to < 0);
