@@ -2,20 +2,9 @@
 
 #define GET_HF(_ht) ((HashFunc **)((char *)_ht - sizeof(HashFunc *)))
 
-static const unsigned int HASH_SIMPLE_M = 10;
-static unsigned int HASH_SIMPLE_F(const char* key)
-{
-	unsigned int ret = 0;
-	while(*key) ret += *key++;
-	return ret % HASH_SIMPLE_M;
-}
-
 ListNode** hashtab_init(HashFunc *_hf)
 {
-	HASH_SIMPLE.maxVal = HASH_SIMPLE_M,
-	HASH_SIMPLE.func = &HASH_SIMPLE_F;
-	
-	if(!_hf) _hf = &HASH_SIMPLE;
+	if(!_hf) _hf = HASH_SIMPLE();
 	char *ret = malloc(sizeof(HashFunc *) + _hf->maxVal * sizeof(ListNode *));
 	if(!ret) return 0;
 	*((HashFunc **)ret) = _hf;
@@ -109,4 +98,20 @@ void hashtab_free(ListNode **_ht)
 		hashtab_free_nodes(_ht[i]);
 	}
 	free(hf);
+}
+
+static const unsigned int HASH_SIMPLE_M = 10;
+static unsigned int HASH_SIMPLE_F(const char* key)
+{
+	unsigned int ret = 0;
+	while(*key) ret += *key++;
+	return ret % HASH_SIMPLE_M;
+}
+static HashFunc HASH_SIMPLE_B;
+
+HashFunc *HASH_SIMPLE()
+{
+	HASH_SIMPLE_B.maxVal = HASH_SIMPLE_M;
+	HASH_SIMPLE_B.func = &HASH_SIMPLE_F;
+	return &HASH_SIMPLE_B;
 }

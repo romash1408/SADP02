@@ -25,6 +25,6 @@ void hashtab_delete(ListNode **_ht, char *_key);
 void hashtab_print(ListNode **_ht);
 void hashtab_free(ListNode **_ht);
 
-HashFunc HASH_SIMPLE;
+HashFunc *HASH_SIMPLE();
 
 #endif
