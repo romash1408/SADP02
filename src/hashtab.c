@@ -1,37 +1,92 @@
 #include "hashtab.h"
 
-static unsigned int hashtab_hash(char *_key)
+#define GET_HF(_ht) *((HashFunc **)((char *)_ht - sizeof(HashFunc *)))
+
+static const unsigned int HASH_SIMPLE_M = 10;
+static unsigned int HASH_SIMPLE_F(const char* key)
 {
-	return 0;
+	unsigned int ret = 0;
+	while(*key) ret += *key++;
+	return ret % HASH_SIMPLE_M;
 }
 
-void hashtab_init(HashTab _ht)
+ListNode** hashtab_init(HashFunc *_hf)
 {
+	HASH_SIMPLE.maxVal = HASH_SIMPLE_M,
+	HASH_SIMPLE.func = &HASH_SIMPLE_F;
 	
+	if(!_hf) _hf = &HASH_SIMPLE;
+	char *ret = malloc(sizeof(HashFunc *) + _hf->maxVal * sizeof(ListNode *));
+	if(!ret) return 0;
+	*((HashFunc **)ret) = _hf;
+	ret += sizeof(HashFunc *);
+	memset(ret, 0, _hf->maxVal * sizeof(ListNode *));
+	return (ListNode **)ret;
 }
 
-void hashtab_add(HashTab _ht, char *key, int _val)
+void hashtab_add(ListNode **_ht, char *_key, int _val)
 {
-	
+	HashFunc *hf = GET_HF(_ht);
+	ListNode **to = _ht + hf->func(_key);
+	while(*to) to = &((*to)->next);
+	*to = malloc(sizeof(ListNode));
+	if(!*to) return;
+	char *tmp = malloc(strlen(_key) + 1);
+	if(!tmp)
+	{
+		free(*to);
+		*to = 0;
+		return;
+	}
+	strcpy(tmp, _key);
+	**to = (ListNode){
+		.key = tmp,
+		.value = _val,
+		.next = 0
+	};
 }
 
-ListNode hashtab_lookup(HashTab _ht, char *_key)
+ListNode hashtab_lookup(ListNode **_ht, char *_key)
 {
 	return **_ht;
 }
 
-void hashtab_delete(HashTab _ht, char *_key)
+void hashtab_delete(ListNode **_ht, char *_key)
 {
 	
 }
 
 
-void hashtab_print(HashTab _ht)
+void hashtab_print(ListNode **_ht)
 {
-	
+	HashFunc *hf = GET_HF(_ht);
+	for(unsigned int i = 0; i < hf->maxVal; ++i)
+	{
+		ListNode *next = _ht[i];
+		if(!next) continue;
+		printf("\t%d:", i);
+		do{
+			printf(" (\"%s\" -> %d)", next->key, next->value);
+			next = next->next;
+		}while(next);
+		printf("\n");
+	}
 }
 
-void hashtab_free(HashTab _ht)
+static void hashtab_free_node(ListNode *_node)
 {
-	
+	if(!_node) return;
+	hashtab_free_node(_node->next);
+	free(_node->key);
+	free(_node);
+}
+
+void hashtab_free(ListNode **_ht)
+{
+	HashFunc *hf = GET_HF(_ht);
+	for(unsigned int i = 0; i < hf->maxVal; ++i)
+	{
+		hashtab_free_node(_ht[i]);
+	}
+	free(hf);
 }

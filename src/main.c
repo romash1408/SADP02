@@ -5,8 +5,7 @@
 int main()
 {
 	char s[10];
-	HashTab tmp = 0;
-	hashtab_init(tmp);
+	ListNode** tmp = hashtab_init(0);
 	if(!tmp)
 	{
 		fprintf(stderr, "Coudn't create ListNode.\n");

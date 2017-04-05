@@ -23,4 +23,4 @@ debug/hashtab.o: src/hashtab.c
 	gcc -Wall -c -g3 -O0 -o debug/hashtab.o src/hashtab.c
 	
 clean:
-	rm build/* test.exe
+	rm build/* debug/* test.exe
