@@ -46,9 +46,9 @@ void hashtab_add(ListNode **_ht, char *_key, int _val)
 	};
 }
 
-ListNode hashtab_lookup(ListNode **_ht, char *_key)
+ListNode* hashtab_lookup(ListNode **_ht, char *_key)
 {
-	return **_ht;
+	return *_ht;
 }
 
 void hashtab_delete(ListNode **_ht, char *_key)

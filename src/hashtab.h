@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "hashfuncs.h"
 
 typedef struct listnode_s ListNode;
 struct listnode_s{
@@ -21,7 +20,7 @@ struct hashfunc_s{
 
 ListNode** hashtab_init(HashFunc *_hf);
 void hashtab_add(ListNode **_ht, char *_key, int _val);
-ListNode hashtab_lookup(ListNode **_ht, char *_key);
+ListNode* hashtab_lookup(ListNode **_ht, char *_key);
 void hashtab_delete(ListNode **_ht, char *_key);
 void hashtab_print(ListNode **_ht);
 void hashtab_free(ListNode **_ht);

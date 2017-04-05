@@ -89,7 +89,7 @@ void bstree_print(struct BSTree *_tree)
 {
 	if(!_tree)
 	{
-		printf("<0>");
+		printf("<0>\n");
 		return;
 	}
 	size_t max_length = 1 << _tree->height;
@@ -123,7 +123,7 @@ void bstree_print(struct BSTree *_tree)
 			}
 			else
 			{
-				sprintf(out, "%s(%zu)", old_trees[i]->key, old_trees[i]->height);
+				sprintf(out, "%s(%u)", old_trees[i]->key, old_trees[i]->height);
 				if((next_trees[next++] = old_trees[i]->childs[0])) ++count;
 				if((next_trees[next++] = old_trees[i]->childs[1])) ++count;
 			}

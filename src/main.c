@@ -4,53 +4,57 @@
 
 int main()
 {
-	char s[10];
-	ListNode** tmp = hashtab_init(0);
-	if(!tmp)
+	int i = 0;
+	char s[256], c;
+	struct BSTree *tree = 0, *tree_fnd;
+	ListNode** tab = hashtab_init(0), *tab_fnd;
+	if(!tab)
 	{
 		fprintf(stderr, "Coudn't create ListNode.\n");
 		return 1;
 	}
 	
-	for(int i = 0; i <= N; ++i)
-	{
-		scanf("%s", s);
-		hashtab_add(tmp, s, i);
-		hashtab_print(tmp);
-	}
-	
-	hashtab_free(tmp);
-	return 0;
-	
-	/* BSTree
-	int i = 0;
-	char s[256], c;
-	struct BSTree *tmp = 0, *fnd;
 	
 	while(1)
 	{
 		++i;
-		scanf("\n%c %s", &c, s);
+		scanf("\n%c", &c);
 		if(c == 'q') break;
+		if(c != 'p') scanf("%s", s);
 		switch(c)
 		{
 		case 'a':
-			tmp = bstree_add(tmp, s, i);
+			tree = bstree_add(tree, s, i);
+			hashtab_add(tab, s, i);
 			break;
 		case 'd':
-			tmp = bstree_delete(tmp, s);
+			tree = bstree_delete(tree, s);
+			hashtab_delete(tab, s);
 			break;
 		case 'f':
-			fnd = bstree_lookup(tmp, s);
-			if(fnd)
-				printf("Found %s\n", fnd->key);
+			tree_fnd = bstree_lookup(tree, s);
+			if(tree_fnd)
+				printf("BSTree found %s -> %d\n", tree_fnd->key, tree_fnd->value);
 			else
-				printf("Didn't found\n");
+				printf("BSTree didn't found\n");
+			
+			tab_fnd = hashtab_lookup(tab, s);
+			if(tab_fnd)
+				printf("HashTab found %s -> %d\n", tab_fnd->key, tab_fnd->value);
+			else
+				printf("HashTab didn't found\n");
+			break;
+		case 'p':
+			printf("BSTree:\n");
+			bstree_print(tree);
+			printf("HashTab:\n");
+			hashtab_print(tab);
+			break;
 		}
-		bstree_print(tmp);
-	}=
-	bstree_print(tmp);
-	bstree_free(tmp);
+			
+	}
+	
+	bstree_free(tree);
+	hashtab_free(tab);
 	return 0;
-	*/
 }
