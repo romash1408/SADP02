@@ -147,7 +147,7 @@ struct BSTree *bstree_lookup(struct BSTree *_tree, char *_key)
 	{
 		_tree = _tree->childs[to < 0];
 	}
-	return 0;
+	return _tree;
 }
 
 struct BSTree *bstree_min(struct BSTree *_tree)

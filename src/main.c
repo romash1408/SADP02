@@ -4,20 +4,13 @@
 int main()
 {
 	int i = 0;
-	char s[10], c;
-	scanf("%s", s);
-	struct BSTree *tmp = bstree_create(s, i);
-	if(!tmp)
-	{
-		fprintf(stderr, "Coudn't create BSTree.\n");
-		return 1;
-	}
-	bstree_print(tmp);
+	char s[256], c;
+	struct BSTree *tmp = 0, *fnd;
 	
 	while(1)
 	{
 		++i;
-		scanf("\n%c %c", &c, s);
+		scanf("\n%c %s", &c, s);
 		if(c == 'q') break;
 		switch(c)
 		{
@@ -28,9 +21,9 @@ int main()
 			tmp = bstree_delete(tmp, s);
 			break;
 		case 'f':
-			tmp = bstree_lookup(tmp, s);
-			if(tmp)
-				printf("Found %d\n", tmp->value);
+			fnd = bstree_lookup(tmp, s);
+			if(fnd)
+				printf("Found %s\n", fnd->key);
 			else
 				printf("Didn't found\n");
 		}
