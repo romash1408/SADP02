@@ -3,7 +3,7 @@ CC = gcc
 IDIR = ./include
 CFLAGS = -Wall -I $(IDIR)
 CDBG = -g3 -O0
-SRC = $(shell ls src/)
+SRC = $(shell ls src/ | grep \\.c)
 APP_NAME = test.exe
 
 ifeq ("$(OS)","Linux")
