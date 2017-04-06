@@ -15,11 +15,11 @@ ListNode** hashtab_init(char *_hf)
 {
 	if(!_hf) _hf = "HASH_SIMPLE";
 	HashFunc *hf = hashtab_get_hashfunc(_hf);
-	char *ret = malloc(sizeof(HashFunc *) + _hf->maxVal * sizeof(ListNode *));
+	char *ret = malloc(sizeof(HashFunc *) + hf->maxVal * sizeof(ListNode *));
 	if(!ret) return 0;
 	*((HashFunc **)ret) = hf;
 	ret += sizeof(HashFunc *);
-	memset(ret, 0, _hf->maxVal * sizeof(ListNode *));
+	memset(ret, 0, hf->maxVal * sizeof(ListNode *));
 	return (ListNode **)ret;
 }
 
