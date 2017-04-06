@@ -8,8 +8,11 @@ APP_NAME = test.exe
 
 ifeq ("$(OS)","Linux")
 	DL_POSTFIX = .os
+ifeq ("$(OS)","Darwin")
+	DL_POSTFIX = .dl
 else
 	DL_POSTFIX = .dll
+endif
 endif
 
 main: $(addprefix build/, $(addsuffix .o, $(SRC)))
