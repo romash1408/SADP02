@@ -2,12 +2,22 @@
 
 #define GET_HF(_ht) ((HashFunc **)((char *)_ht - sizeof(HashFunc *)))
 
-ListNode** hashtab_init(HashFunc *_hf)
+static HashFunc* hashtab_get_hashfunc(const char *const _name)
 {
-	if(!_hf) _hf = HASH_SIMPLE();
+	do{
+		if(strcmp(_name, "HASH_SIMPLE") == 0) break;
+	
+	} while(0);
+	return HASH_SIMPLE();
+}
+
+ListNode** hashtab_init(char *_hf)
+{
+	if(!_hf) _hf = "HASH_SIMPLE";
+	HashFunc *hf = hashtab_get_hashfunc(_hf);
 	char *ret = malloc(sizeof(HashFunc *) + _hf->maxVal * sizeof(ListNode *));
 	if(!ret) return 0;
-	*((HashFunc **)ret) = _hf;
+	*((HashFunc **)ret) = hf;
 	ret += sizeof(HashFunc *);
 	memset(ret, 0, _hf->maxVal * sizeof(ListNode *));
 	return (ListNode **)ret;

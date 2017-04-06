@@ -18,7 +18,7 @@ struct hashfunc_s{
 	unsigned int maxVal;
 };
 
-ListNode** hashtab_init(HashFunc *_hf);
+ListNode** hashtab_init(char *_hf);
 void hashtab_add(ListNode **_ht, char *_key, int _val);
 ListNode* hashtab_lookup(ListNode **_ht, char *_key);
 void hashtab_delete(ListNode **_ht, char *_key);
