@@ -1,26 +1,28 @@
-main: build/main.o build/bstree.o build/hashtab.o
-	gcc -o test.exe build/bstree.o build/main.o build/hashtab.o
+OS = $(shell uname)
+CC = gcc
+IDIR = ./include
+CFLAGS = -Wall -I $(IDIR)
+CDBG = -g3 -O0
+SRC = $(shell ls src/)
+APP_NAME = test.exe
+
+ifeq ("$(OS)","Linux")
+	DL_POSTFIX = .os
+else
+	DL_POSTFIX = .dll
+endif
+
+main: $(addprefix build/, $(addsuffix .o, $(SRC)))
+	$(CC) -o $(APP_NAME) $^
 	
-debug: debug/main.o debug/bstree.o debug/hashtab.o
-	gcc -o test debug/main.o debug/bstree.o debug/hashtab.o
+debug: $(addprefix debug/, $(addsuffix .o, $(SRC)))
+	$(CC) -o $(APP_NAME) $^
 
-build/main.o: src/main.c
-	gcc -Wall -c -o build/main.o src/main.c
+build/%.c.o: src/%.c $(IDIR)/*.h
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-build/bstree.o: src/bstree.c
-	gcc -Wall -c -o build/bstree.o src/bstree.c
-
-build/hashtab.o: src/hashtab.c
-	gcc -Wall -c -o build/hashtab.o src/hashtab.c
-	
-debug/main.o: src/main.c
-	gcc -Wall -c -g3 -O0 -o debug/main.o src/main.c
-
-debug/bstree.o: src/bstree.c
-	gcc -Wall -c -g3 -O0 -o debug/bstree.o src/bstree.c
-	
-debug/hashtab.o: src/hashtab.c
-	gcc -Wall -c -g3 -O0 -o debug/hashtab.o src/hashtab.c
+debug/%.c.o: src/%.c $(IDIR)/*.h
+	$(CC) $(CFLAGS) $(CDBG) -c -o $@ $<
 	
 clean:
 	rm build/* debug/* test.exe
