@@ -4,18 +4,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "hashfunc.h"
 
 typedef struct listnode_s ListNode;
 struct listnode_s{
 	char *key;
 	int value;
 	ListNode *next;
-};
-
-typedef struct hashfunc_s HashFunc;
-struct hashfunc_s{
-	unsigned int (*func)(const char* _key);
-	unsigned int maxVal;
 };
 
 ListNode** hashtab_init(char *_hf);
