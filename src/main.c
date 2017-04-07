@@ -7,7 +7,7 @@ int main()
 	int i = 0;
 	char s[256], c;
 	struct BSTree *tree = 0, *tree_fnd;
-	ListNode** tab = hashtab_init(0), *tab_fnd;
+	ListNode** tab = hashtab_init("HashSimpleLib"), *tab_fnd;
 	if(!tab)
 	{
 		fprintf(stderr, "Coudn't create ListNode.\n");

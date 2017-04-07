@@ -1,4 +1,5 @@
 #include "hashtab.h"
+#include <dlfcn.h>
 
 #define GET_HF(_ht) ((HashFunc **)((char *)_ht - sizeof(HashFunc *)))
 
@@ -6,7 +7,13 @@ static HashFunc* hashtab_get_hashfunc(const char *const _name)
 {
 	do{
 		if(strcmp(_name, "HASH_SIMPLE") == 0) break;
-	
+		char name[256];
+		sprintf(name, "libs/%s.so" , _name);
+		void *lib = dlopen(name, RTLD_LAZY);
+		if(!lib) break;
+		HashFunc* (*tmp)();
+		if(!(tmp = dlsym(lib, _name))) break;
+		return tmp();
 	} while(0);
 	return HASH_SIMPLE();
 }
