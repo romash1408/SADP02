@@ -8,7 +8,7 @@ static HashFunc* hashtab_get_hashfunc(const char *const _name)
 	do{
 		if(strcmp(_name, "HASH_SIMPLE") == 0) break;
 		char name[256];
-		sprintf(name, "libs/%s.os" , _name);
+		sprintf(name, "libs/%s.so" , _name);
 		void *lib = dlopen(name, RTLD_LAZY);
 		if(!lib) break;
 		HashFunc* (*tmp)();

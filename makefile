@@ -1,6 +1,6 @@
 OS = $(shell uname)
 ifeq ("$(OS)", "Linux")
-	DL_POSTFIX = os
+	DL_POSTFIX = so
 	CDL = -fPIC -shared
 else
 	DL_POSTFIX = dll
